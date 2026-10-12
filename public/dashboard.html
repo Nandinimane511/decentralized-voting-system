@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Decentralized Voting System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header matching Fig 4.1.2 -->
+  <header class="navbar" style="justify-content: center; text-align: center; padding: 18px 20px;">
+    <div>
+      <h1 style="font-size: 16px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #ffffff;">DECENTRALIZED VOTING SYSTEM</h1>
+      <p style="font-size: 11px; color: #60a5fa; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px;">ETHEREUM BLOCKCHAIN PORTAL</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="page-container" style="max-width: 860px; margin: 48px auto;">
+    <div class="dashboard-card" style="padding: 40px 36px; border-radius: 12px;">
+      <h2 style="font-size: 22px; font-weight: 600; color: #1e293b; margin-bottom: 6px;">Welcome to Your Dashboard</h2>
+      <p class="subtitle" style="color: #64748b; font-size: 13px; margin-bottom: 32px;">Select the portal you want to open</p>
+
+      <div class="portal-grid" style="gap: 24px; margin-bottom: 32px;">
+        <!-- Voting Portal Card -->
+        <div class="portal-card" style="padding: 32px 24px; border: 1px solid #e2e8f0; border-radius: 10px; background: #ffffff;">
+          <div>
+            <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">Voting Portal</h3>
+            <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin-bottom: 24px;">View the candidate list and cast your vote.</p>
+          </div>
+          <a href="voter.html" class="btn-portal" style="background: #2563eb; padding: 10px 24px; border-radius: 6px; font-weight: 500;">Open Voting Portal</a>
+        </div>
+
+        <!-- Admin Portal Card -->
+        <div class="portal-card" style="padding: 32px 24px; border: 1px solid #e2e8f0; border-radius: 10px; background: #ffffff;">
+          <div>
+            <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">Admin Portal</h3>
+            <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin-bottom: 24px;">Open the administration page to manage election tasks.</p>
+          </div>
+          <a href="admin.html" id="adminPortalBtn" class="btn-portal" style="background: #2563eb; padding: 10px 24px; border-radius: 6px; font-weight: 500;">Open Admin Portal</a>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button id="logoutBtn" class="btn-logout" style="padding: 8px 30px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px;">Logout</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer" style="background: var(--dark-bg); color: #94a3b8; padding: 14px 20px; font-size: 12px; border-top: 1px solid #134074; text-align: center;">
+    Decentralized Voting System | Powered by Ethereum Blockchain
+  </footer>
+
+  <script>
+    const userRole = localStorage.getItem('user_role');
+    const userName = localStorage.getItem('user_name');
+    const voterId = localStorage.getItem('user_id');
+
+    if (!userRole) {
+      window.location.href = 'index.html';
+    }
+
+    document.getElementById('userGreeting').innerText = `Logged in as: ${userName || voterId} (${userRole.toUpperCase()})`;
+
+    // Admin permission check visually
+    const adminBtn = document.getElementById('adminPortalBtn');
+    if (userRole !== 'admin') {
+      adminBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Access Restricted: You are logged in as a Voter. Only Administrator accounts can access the Admin Portal.');
+      });
+      adminBtn.style.opacity = '0.6';
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.clear();
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>

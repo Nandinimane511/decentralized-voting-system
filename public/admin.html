@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Election Management</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="brand-badge">V</div>
+      <div>
+        <h1>Decentralized Voting</h1>
+        <p>Ethereum Blockchain Platform</p>
+      </div>
+    </div>
+    <div class="nav-right">
+      <span class="portal-tag">● Administrator Portal</span>
+      <a href="dashboard.html" style="color: #cbd5e1; font-size: 13px; text-decoration: none; margin-left: 12px;">← Dashboard</a>
+      <div id="walletBadge" class="wallet-badge">
+        <div id="walletDot" class="wallet-dot" style="background-color: #f59e0b;"></div>
+        <span id="walletAddress">Connecting Wallet...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="page-container">
+
+    <div class="section-header">
+      <div class="section-label">ADMINISTRATION / DASHBOARD</div>
+      <h2>Election Management</h2>
+      <p>Manage candidates and configure your election schedule. All blockchain actions require a connected authorized wallet.</p>
+    </div>
+
+    <div id="adminAlert" class="status-message" style="display: none; margin-bottom: 20px;"></div>
+
+    <!-- 01 Add Candidate Card -->
+    <div class="admin-card">
+      <div class="admin-card-title">
+        <span class="step-badge">01</span> Add Candidate
+      </div>
+      <p class="admin-card-sub">Register a candidate for the upcoming election on the Ethereum smart contract.</p>
+
+      <form id="addCandidateForm">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="candidateName">Candidate Name</label>
+            <input type="text" id="candidateName" class="form-control" placeholder="Enter the candidate's full name" required>
+            <p class="form-help">Enter the candidate's legal or ballot name.</p>
+          </div>
+          <div class="form-group">
+            <label for="partyName">Party Name</label>
+            <input type="text" id="partyName" class="form-control" placeholder="Enter the candidate's party or group" required>
+            <p class="form-help">Enter the candidate's political party abbreviation or name.</p>
+          </div>
+        </div>
+
+        <button type="submit" id="addCandidateBtn" class="btn-admin">Add Candidate</button>
+      </form>
+    </div>
+
+    <!-- 02 Define Voting Dates Card -->
+    <div class="admin-card">
+      <div class="admin-card-title">
+        <span class="step-badge">02</span> Define Voting Dates
+      </div>
+      <p class="admin-card-sub">Configure when the election opens and closes on the blockchain.</p>
+
+      <form id="setDatesForm">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="startDate">Election Start Date & Time</label>
+            <input type="datetime-local" id="startDate" class="form-control" required>
+            <p class="form-help">Voting will only be enabled after this timestamp.</p>
+          </div>
+          <div class="form-group">
+            <label for="endDate">Election End Date & Time</label>
+            <input type="datetime-local" id="endDate" class="form-control" required>
+            <p class="form-help">Voting will automatically close at this timestamp.</p>
+          </div>
+        </div>
+
+        <button type="submit" id="setDatesBtn" class="btn-admin">Save Election Dates</button>
+      </form>
+    </div>
+
+    <!-- Live Election Audit Table -->
+    <div class="panel-card">
+      <div class="panel-header">
+        <div>
+          <h3>Current Candidates on Blockchain</h3>
+          <p>Real-time candidate count and vote counts from the smart contract.</p>
+        </div>
+        <button id="refreshBtn" class="btn-logout" style="padding: 4px 12px; font-size: 12px;">Refresh</button>
+      </div>
+
+      <table class="ballot-table">
+        <thead>
+          <tr>
+            <th style="width: 60px;">ID</th>
+            <th>CANDIDATE NAME</th>
+            <th>PARTY</th>
+            <th style="width: 140px;">TOTAL VOTES</th>
+          </tr>
+        </thead>
+        <tbody id="adminCandidateTableBody">
+          <tr>
+            <td colspan="4" style="text-align: center; color: #94a3b8; padding: 20px;">
+              Loading smart contract records...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Live Results & Analytics for Admin -->
+    <div class="panel-card">
+      <div class="panel-header">
+        <div>
+          <h3>📊 Live Election Standings & Vote Distribution</h3>
+          <p>Real-time analytics and percentages from the Ethereum smart contract.</p>
+        </div>
+        <span id="totalVotesBadge" class="ballot-tag" style="background: #ecfdf5; color: #059669; border-color: #a7f3d0;">
+          Total Votes: 0
+        </span>
+      </div>
+
+      <div id="resultsLeaderBanner" style="display: none; padding: 14px 18px; background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%); border: 1px solid #bae6fd; border-radius: 8px; margin-bottom: 20px;">
+        <span style="font-size: 20px; vertical-align: middle; margin-right: 6px;">🏆</span>
+        <strong>Current Leader: </strong>
+        <span id="leaderName" style="color: #0369a1; font-weight: 700;">-</span>
+        <span id="leaderParty" style="color: #64748b; font-size: 13px; margin-left: 4px;"></span>
+        <span id="leaderVotes" style="font-weight: 700; color: #0284c7; margin-left: 10px;"></span>
+      </div>
+
+      <div id="resultsBarsContainer"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    Decentralized Voting System | Powered by Ethereum Blockchain
+  </footer>
+
+  <script src="js/web3-app.js"></script>
+</body>
+</html>

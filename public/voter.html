@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting Portal - Decentralized Voting System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Ethers.js library for Web3 / Ethereum smart contract interaction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="brand-badge">V</div>
+      <div>
+        <h1>Decentralized Voting</h1>
+        <p>Ethereum Blockchain Platform</p>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="dashboard.html" style="color: #cbd5e1; font-size: 13px; text-decoration: none; margin-right: 12px;">← Dashboard</a>
+      <div id="walletBadge" class="wallet-badge">
+        <div id="walletDot" class="wallet-dot" style="background-color: #f59e0b;"></div>
+        <span id="walletAddress">Connecting Wallet...</span>
+      </div>
+      <button id="connectWalletBtn" class="btn-portal" style="padding: 6px 14px; font-size: 12px; display: none;">Connect MetaMask</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="page-container">
+    
+    <div class="section-header">
+      <div class="section-label">ELECTION DASHBOARD</div>
+      <h2>Welcome to the Voting Portal</h2>
+      <p>Review the candidates below and cast your vote securely. Your vote is recorded through the Ethereum blockchain.</p>
+    </div>
+
+    <!-- Election Schedule Box -->
+    <div class="schedule-card">
+      <div class="schedule-title">Election Schedule</div>
+      <div id="scheduleDates" class="schedule-dates">Loading election dates from smart contract...</div>
+      <div id="scheduleSub" class="schedule-sub" style="margin-top: 4px;"></div>
+    </div>
+
+    <!-- Candidate List Table Panel -->
+    <div class="panel-card">
+      <div class="panel-header">
+        <div>
+          <h3>Candidate List</h3>
+          <p>Select a candidate after reviewing the available details.</p>
+        </div>
+        <div class="ballot-tag">OFFICIAL BALLOT</div>
+      </div>
+
+      <table class="ballot-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">SELECT</th>
+            <th>CANDIDATE NAME</th>
+            <th>PARTY</th>
+            <th style="width: 140px;">TOTAL VOTES</th>
+          </tr>
+        </thead>
+        <tbody id="candidateTableBody">
+          <tr>
+            <td colspan="4" style="text-align: center; color: #94a3b8; padding: 24px;">
+              Loading candidate list from Ethereum blockchain...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cast Your Vote Section -->
+    <div class="vote-section">
+      <h3>Cast Your Vote</h3>
+      <p>Please select one candidate and click the button below to submit your vote.</p>
+
+      <button id="castVoteBtn" class="btn-vote" disabled>Cast Vote</button>
+
+      <div id="statusAlert" class="status-message" style="display: none;"></div>
+    </div>
+
+    <!-- Live Election Results & Analytics Panel -->
+    <div class="panel-card">
+      <div class="panel-header">
+        <div>
+          <h3>📊 Live Election Results & Standings</h3>
+          <p>Real-time vote tallies directly verified on the Ethereum blockchain.</p>
+        </div>
+        <span id="totalVotesBadge" class="ballot-tag" style="background: #ecfdf5; color: #059669; border-color: #a7f3d0;">
+          Total Votes: 0
+        </span>
+      </div>
+
+      <div id="resultsLeaderBanner" style="display: none; padding: 14px 18px; background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%); border: 1px solid #bae6fd; border-radius: 8px; margin-bottom: 20px;">
+        <span style="font-size: 20px; vertical-align: middle; margin-right: 6px;">🏆</span>
+        <strong>Current Leader: </strong>
+        <span id="leaderName" style="color: #0369a1; font-weight: 700;">-</span>
+        <span id="leaderParty" style="color: #64748b; font-size: 13px; margin-left: 4px;"></span>
+        <span id="leaderVotes" style="font-weight: 700; color: #0284c7; margin-left: 10px;"></span>
+      </div>
+
+      <div id="resultsBarsContainer">
+        <!-- Progress bars dynamically injected here -->
+      </div>
+    </div>
+
+    <!-- Blockchain-Based Voting Footer Indicator -->
+    <div class="blockchain-badge-footer">
+      <div class="check-icon">✓</div>
+      <div>
+        <strong>Blockchain-Based Voting</strong><br>
+        Voting transactions are processed through the application's Ethereum MetaMask integration.
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    Decentralized Voting System | Powered by Ethereum Blockchain
+  </footer>
+
+  <script src="js/web3-app.js"></script>
+</body>
+</html>
